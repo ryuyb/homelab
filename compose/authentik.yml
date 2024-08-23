@@ -9,6 +9,7 @@ services:
       interval: 30s
       retries: 5
       timeout: 5s
+    user: root
     volumes:
       - ${MOUNT_PATH}/appdata/postgresql:/var/lib/postgresql/data
     environment:
@@ -40,6 +41,7 @@ services:
       - AUTHENTIK_POSTGRESQL__NAME=${POSTGRES_DB}
       - AUTHENTIK_POSTGRESQL__PASSWORD=${POSTGRES_PASSWORD}
       - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY}
+    user: root
     volumes:
       - ${MOUNT_PATH}/appdata/authentik/server/media:/media
       - ${MOUNT_PATH}/appdata/authentik/server/custom-templates:/templates
