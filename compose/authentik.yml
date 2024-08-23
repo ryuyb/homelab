@@ -70,8 +70,9 @@ services:
     volumes:
       - ${SOCK_PATH:-/var/run/docker.sock}:/var/run/docker.sock
       - ${MOUNT_PATH}/appdata/authentik/worker/media:/media
-      - ${MOUNT_PATH}/appdata/authentik/worker/certs:/certs
+#      - ${MOUNT_PATH}/appdata/authentik/worker/certs:/certs
       - ${MOUNT_PATH}/appdata/authentik/worker/custom-templates:/templates
+      - ${MOUNT_PATH}/appdata/certs:/certs
     depends_on:
       - authentik-postgresql
       - authentik-redis
