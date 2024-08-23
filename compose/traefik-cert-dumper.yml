@@ -8,7 +8,8 @@ services:
       sleep 1
       ; done
       && traefik-certs-dumper file --version v2 --watch
-      --domain-subdir --crt-ext=.pem
+      --domain-subdir --crt-ext=.pem --key-ext=.pem
+      --crt-name=fullchain --key-name=privkey
       --source /data/acme.json --dest /result'
     volumes:
       - ${MOUNT_PATH}/appdata/traefik/letsencrypt:/data
