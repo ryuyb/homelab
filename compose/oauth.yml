@@ -1,0 +1,21 @@
+services:
+  oauth:
+    image: thomseddon/traefik-forward-auth:latest
+    container_name: forward-auth
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ:-Asia/Shanghai}
+      - DEFAULT_PROVIDER=${TRAEFIK_FORWARD_AUTH_DEFAULT_PROVIDER}
+      - PROVIDERS_OIDC_ISSUER_URL=${TRAEFIK_FORWARD_AUTH_PROVIDERS_OIDC_ISSUER_URL}
+      - PROVIDERS_OIDC_CLIENT_ID=${TRAEFIK_FORWARD_AUTH_PROVIDERS_OIDC_CLIENT_ID}
+      - PROVIDERS_OIDC_CLIENT_SECRET=${TRAEFIK_FORWARD_AUTH_PROVIDERS_OIDC_CLIENT_SECRET}
+      - SECRET=${TRAEFIK_FORWARD_AUTH_SECRET}
+    command: >
+      --cookie-domain="${DNS_DOMAIN}"
+      --auth-host="oauth.${DNS_DOMAIN}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.oauth.rule=Host(`oauth.${DNS_DOMAIN}`)"
+      - "traefik.http.routers.oauth.middlewares=chain-oauth@file"
+      - "traefik.http.routers.oauth.service=oauth-svc"
+      - "traefik.http.services.oauth-svc.loadbalancer.server.port=4181"

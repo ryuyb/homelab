@@ -1,0 +1,58 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${SOCK_PATH:-/var/run/docker.sock}:/var/run/docker.sock
+      - ${MOUNT_PATH}/appdata/traefik:/traefik_data
+      - ${MOUNT_PATH}/config/traefik:/traefik
+    environment:
+      - TZ=${TZ:-Asia/Shanghai}
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
+      - CF_ZONE_API_TOKEN=${CF_ZONE_API_TOKEN}
+    command: >
+      --global.checknewversion=true
+      --global.sendanonymoususage=false
+      --serverstransport.insecureskipverify=true
+      --log.level=ERROR
+      --log.filepath=/traefik_data/logs/traefik.log
+      --accesslog.addinternals=true
+      --accesslog.filepath=/traefik_data/logs/access.log
+      --accesslog.fields.names.StartUTC=drop
+      --accesslog.fields.headers.names.Content-Type=keep
+      --accesslog.fields.headers.names.Referer=keep
+      --accesslog.fields.headers.names.User-Agent=keep
+      --api.insecure=false
+      --api.dashboard=true
+      --api.disableDashboardAd=true
+      --ping=true
+      --ping.manualrouting=true
+      --providers.docker=true
+      --providers.docker.exposedbydefault=false
+      --providers.file.directory=/traefik/dynamic_conf
+      --providers.file.watch=true
+      --entrypoints.web.address=:80
+      --entrypoints.web.http.redirections.entrypoint.to=websecure
+      --entrypoints.web.http.redirections.entrypoint.scheme=https
+      --entrypoints.websecure.address=:443
+      --entrypoints.websecure.asDefault=true
+      --entrypoints.websecure.http.tls=true
+      --entrypoints.websecure.http.tls.certresolver=letsencrypt
+      --entryPoints.websecure.http.tls.domains[0].main=${DNS_DOMAIN}
+      --entrypoints.websecure.http.tls.domains[0].sans=*.${DNS_DOMAIN}
+      --certificatesresolvers.letsencrypt.acme.dnsChallenge=true
+      --certificatesresolvers.letsencrypt.acme.dnsChallenge.provider=cloudflare
+      --certificatesresolvers.letsencrypt.acme.email=letsencrypt@${DNS_DOMAIN}
+      --certificatesresolvers.letsencrypt.acme.storage=/traefik_data/letsencrypt/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`traefik.${DNS_DOMAIN}`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=chain-oauth@file"
+      - "traefik.http.routers.ping.rule=Host(`traefik.${DNS_DOMAIN}`) && PathPrefix(`/ping`)"
+      - "traefik.http.routers.ping.service=ping@internal"
+      - "traefik.http.routers.ping.middlewares=chain-no-oauth@file"

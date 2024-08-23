@@ -1,0 +1,12 @@
+name: homelab-gateway
+
+networks:
+  default:
+    driver: bridge
+
+include:
+  - compose/traefik.yml
+  # - compose/oauth.yml
+  - compose/authentik.yml
+  - compose/uptime-kuma.yml
+  - compose/portainer.yml

@@ -1,0 +1,14 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${MOUNT_PATH}/appdata/portainer:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.${DNS_DOMAIN}`)"
+      # - "traefik.http.routers.portainer.middlewares=chain-oauth@file"
+      - "traefik.http.routers.portainer.service=portainer-svc"
+      - "traefik.http.services.portainer-svc.loadbalancer.server.port=9443"

@@ -1,0 +1,21 @@
+# Task is a task runner / build tool
+# https://taskfile.dev/
+
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  up:
+    dir: '{{.USER_WORKING_DIR}}'
+    preconditions:
+      - test -f compose.yml
+    cmds:
+      - docker compose up -d
+
+  down:
+    dir: '{{.USER_WORKING_DIR}}'
+    preconditions:
+      - test -f compose.yml
+    cmds:
+      - docker compose down
