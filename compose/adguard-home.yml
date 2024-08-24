@@ -9,7 +9,7 @@ services:
     ports:
       - 53:53/udp
       - 53:53/tcp
-    network:
+    networks:
       default:
       dns_nst:
     labels:
