@@ -20,3 +20,4 @@ include:
   - compose/portainer.yml
   - compose/traefik-cert-dumper.yml
   - compose/adguard-home.yml
+  - compose/mosdns.yml
