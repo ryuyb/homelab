@@ -9,6 +9,9 @@ services:
     ports:
       - 53:53/udp
       - 53:53/tcp
+    network:
+      default:
+      dns_nst:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adguard.rule=Host(`adguard.${DNS_DOMAIN}`)"

@@ -3,6 +3,11 @@ name: homelab-gateway
 networks:
   default:
     driver: bridge
+  dns_nst:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
   macvlan_net:
     driver: macvlan
     driver_opts:
