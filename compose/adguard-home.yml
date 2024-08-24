@@ -1,0 +1,17 @@
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    volumes:
+      - ${MOUNT_PATH}/appdata/adguardhome/work:/opt/adguardhome/work
+      - ${MOUNT_PATH}/appdata/adguardhome/conf:/opt/adguardhome/conf
+    ports:
+      - 53:53/udp
+      - 53:53/tcp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adguard.rule=Host(`adguard.${DNS_DOMAIN}`)"
+      # - "traefik.http.routers.adguard.middlewares=chain-oauth@file"
+      - "traefik.http.routers.adguard.service=adguard-svc"
+      - "traefik.http.services.adguard-svc.loadbalancer.server.port=3000"
