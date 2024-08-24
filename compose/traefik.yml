@@ -44,6 +44,7 @@ services:
       --entrypoints.websecure.http.tls.certresolver=letsencrypt
       --entryPoints.websecure.http.tls.domains[0].main=${DNS_DOMAIN}
       --entrypoints.websecure.http.tls.domains[0].sans=*.${DNS_DOMAIN}
+      --entrypoints.websecure.forwardedHeaders.trustedIPs=$CLOUDFLARE_IPS,$LOCAL_IPS
       --certificatesresolvers.letsencrypt.acme.dnsChallenge=true
       --certificatesresolvers.letsencrypt.acme.dnsChallenge.provider=cloudflare
       --certificatesresolvers.letsencrypt.acme.email=letsencrypt@${DNS_DOMAIN}
