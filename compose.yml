@@ -27,7 +27,5 @@ include:
   - compose/uptime-kuma.yml
   - compose/portainer.yml
   - compose/traefik-cert-dumper.yml
-  - compose/adguard-home.yml
-  - compose/mosdns.yml
   - compose/homarr.yml
   # - compose/natter.yml
