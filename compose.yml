@@ -35,4 +35,3 @@ include:
   - compose/adguard-home.yml
   - compose/mosdns.yml
   # - compose/natter.yml
-  - compose/homepage.yml
