@@ -21,6 +21,7 @@ networks:
       config:
         - subnet: 172.16.1.0/24
           gateway: 172.16.1.1
+        - subnet: fdac::1/64
 
 include:
   - compose/traefik.yml

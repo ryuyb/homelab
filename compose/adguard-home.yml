@@ -14,6 +14,7 @@ services:
       dns_nst:
       macvlan_net:
         ipv4_address: 172.16.1.2
+        ipv6_address: fdac::2
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adguard.rule=Host(`adguard.${DNS_DOMAIN}`)"
