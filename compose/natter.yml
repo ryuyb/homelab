@@ -1,0 +1,7 @@
+services:
+  natter:
+    image: nattertool/natter
+    container_name: natter
+    restart: unless-stopped
+    network_mode: host
+    command: -p 443
