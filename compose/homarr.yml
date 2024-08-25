@@ -11,6 +11,7 @@ services:
     networks:
       default:
       macvlan_net:
+        ipv4_address: 172.16.1.4
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homarr.rule=Host(`homarr.${DNS_DOMAIN}`)"
