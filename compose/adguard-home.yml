@@ -18,6 +18,5 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adguard.rule=Host(`adguard.${DNS_DOMAIN}`)"
-      # - "traefik.http.routers.adguard.middlewares=chain-oauth@file"
       - "traefik.http.routers.adguard.service=adguard-svc"
       - "traefik.http.services.adguard-svc.loadbalancer.server.port=3000"
