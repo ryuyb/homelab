@@ -12,7 +12,6 @@ services:
     networks:
       default:
       dns_nst:
-      ipv6_net:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adguard.rule=Host(`adguard.${DNS_DOMAIN}`)"
