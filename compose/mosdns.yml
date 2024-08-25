@@ -8,4 +8,6 @@ services:
     networks:
       default:
       dns_nst:
-        ipv4_address: 172.20.0.2
+        ipv4_address: 172.20.0.3
+      macvlan_net:
+        ipv4_address: 172.16.1.3
