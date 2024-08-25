@@ -7,8 +7,6 @@ services:
       - ${MOUNT_PATH}/config/mosdns:/etc/mosdns
     networks:
       default:
-      dns_nst:
-        ipv4_address: 172.20.0.3
       macvlan_net:
         ipv4_address: 172.16.1.3
         ipv6_address: fdac::3

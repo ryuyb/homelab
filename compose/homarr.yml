@@ -8,6 +8,9 @@ services:
       - ${MOUNT_PATH}/appdata/homarr/configs:/app/data/configs
       - ${MOUNT_PATH}/appdata/homarr/icons:/app/public/icons
       - ${MOUNT_PATH}/appdata/homarr/data:/data
+    networks:
+      default:
+      macvlan_net:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homarr.rule=Host(`homarr.${DNS_DOMAIN}`)"
