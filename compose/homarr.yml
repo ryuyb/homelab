@@ -1,0 +1,15 @@
+services:
+  homarr:
+    image: ghcr.io/ajnart/homarr:latest
+    container_name: homarr
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${MOUNT_PATH}/appdata/homarr/configs:/app/data/configs
+      - ${MOUNT_PATH}/appdata/homarr/icons:/app/public/icons
+      - ${MOUNT_PATH}/appdata/homarr/data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homarr.rule=Host(`homarr.${DNS_DOMAIN}`)"
+      - "traefik.http.routers.homarr.service=homarr-svc"
+      - "traefik.http.services.homarr-svc.loadbalancer.server.port=7575"
