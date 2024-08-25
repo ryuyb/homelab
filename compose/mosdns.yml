@@ -9,3 +9,4 @@ services:
       default:
       dns_nst:
         ipv4_address: 172.20.0.2
+      ipv6_net:

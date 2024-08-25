@@ -16,6 +16,12 @@ networks:
       config:
         - subnet: 192.168.31.0/24
           gateway: 192.168.31.1
+  ipv6_net:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 2001:db8::/64
 
 include:
   - compose/traefik.yml
@@ -26,4 +32,4 @@ include:
   - compose/traefik-cert-dumper.yml
   - compose/adguard-home.yml
   - compose/mosdns.yml
-  - compose/natter.yml
+  # - compose/natter.yml
